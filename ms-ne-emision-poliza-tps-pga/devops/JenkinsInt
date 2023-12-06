@@ -1,0 +1,16 @@
+@Library('jenkins-library@master')_
+
+jenkinsTplGradleIntV1 {
+
+    K8S_NAMESPACE   = 'ecommerce'
+    SERVICE_NAME    = 'ms-ne-emision-poliza-tps-pga'
+    ENVIRONMENT     = 'integration'
+    APIM_JOB_NAME   = 'pdu/Infraestructura/multicanal/apim-api/api-oc-ne-emision-poliza-tps-pga'
+    APIM_NAME       = 'api-oc-ne-emision-poliza-tps-pga'
+    API_WORKDIR     = 'multicanal' // pdu dir: [var]/apim/api
+    IMAGE_TAG       = 'latest'
+    GRADLE_V        = '6.9.0-jdk11'
+    DEPLOY_APIM     = true 
+    MIN_REPLICA     = 1
+    MAX_REPLICA     = 2
+}

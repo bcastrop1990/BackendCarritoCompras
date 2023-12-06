@@ -1,0 +1,27 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+name: Integration
+jobs:
+  integration:
+    uses: "pacifico-seguros-org/gradle-deploy-aks/.github/workflows/main.yml@latest"
+    if: github.ref == 'refs/heads/develop'
+    with:
+      java_version: "11"
+      gradle_version: "6.9.4"
+      registry_name: ${{ vars.AZURE_CR_NAME_INT  }}
+      azure_tenant_id: ${{ vars.AZURE_TENANT_ID  }}
+      azure_subscription_id: ${{ vars.AZURE_PDIGITAL_SUBSCRIPTION_ID_INT  }}
+      resource_group: ${{ vars.AZURE_AKS_RG_NAME_INT  }}
+      cluster_name: ${{ vars.AZURE_AKS_NAME_INT  }}
+      profile: "integration"
+      cluster_namespace: ${{ vars.AZURE_AKS_NAMESPACE }}
+      cluster_max_replica: "2"
+      cluster_min_replica: "1"
+    secrets:
+      GH_PACKAGES_USER: ${{ secrets.GH_PACKAGES_USER }}
+      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_SP_INT }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET_SP_INT }}

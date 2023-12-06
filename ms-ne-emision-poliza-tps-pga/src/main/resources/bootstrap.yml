@@ -1,0 +1,41 @@
+application:
+  ecnf:
+    api:
+      path: /
+
+spring:
+  application:
+    name: ms-ne-emision-poliza-tps-pga-v1
+  profiles:
+    active: local
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          property-sources[0]:
+            enabled: '${AZURE_KV_ENABLED:false}'
+            endpoint: '${AZURE_KV_URI:http://localhost:888/xxxx}'
+            credential:
+              client-id: '${AZURE_KV_CLIENT_ID:aaaa}'
+              client-secret: '${AZURE_KV_CLIENT_KEY:bbbb}'
+            profile:
+              tenant-id: '${AZURE_KV_TENANT_ID:cccc}'
+  main:
+    allow-bean-definition-overriding: true
+
+info:
+  project:
+    version: 1.0.0
+    title: Gestion Poliza Dummy
+    description: guardar y consultar los datos de una poliza
+    expose.package: pe.com.pacifico.kuntur.expose
+
+management:
+  endpoints:
+    web:
+      base-path: /
+
+  
+health:
+  config:
+    enabled: false

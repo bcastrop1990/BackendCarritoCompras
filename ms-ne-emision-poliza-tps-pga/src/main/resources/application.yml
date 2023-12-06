@@ -1,0 +1,65 @@
+server:
+  port: 9092
+  servlet:
+    context-path: /ms-ne-emision-poliza-tps-pga/emision/v1
+
+spring:
+  application:
+    name: ms-ne-emision-poliza-tps-pga-v1
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driverClassName: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/EE.oracle.docker
+    username: system
+    password: oracle
+
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+        default_schema: EMISIONTPS0100
+        format_sql: true
+  liquibase:
+    enabled: true
+
+
+kuntur:
+  spring:
+    jdbc:
+      show-sql: false
+
+api:
+  support:
+    base:
+      example:
+        url: http://localhost:9080/example
+        Authorization: 1234557aa
+        ocp-apim-trace: true
+webclient:
+  connect:
+    time-out.millis: 50000
+  read:
+    time-out.seconds: 50
+  write:
+    time-out.seconds: 50
+  circuit-breaker:
+      time-out.seconds: 10
+
+info:
+  project:
+    version: 1.0.0
+    title: Gestion Poliza Dummy
+    description: guardar y consultar los datos de una poliza
+    expose.package: pe.com.pacifico.kuntur.expose
+
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  level:
+    org.springframework.web: ERROR
+    pe.com.pacifico.kuntur: DEBUG
+    org.hibernate: ERROR

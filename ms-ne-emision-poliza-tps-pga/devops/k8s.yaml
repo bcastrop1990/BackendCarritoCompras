@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-ne-emision-poliza-tps-pga
+  namespace: ecommerce
+  labels:
+    app: ms-ne-emision-poliza-tps-pga
+spec:
+  ports:
+    - port: 9090
+      targetPort: 9091
+  selector:
+    app: ms-ne-emision-poliza-tps-pga
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-ne-emision-poliza-tps-pga
+  namespace: ecommerce
+  labels:
+    app: ms-ne-emision-poliza-tps-pga
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: ms-ne-emision-poliza-tps-pga
+  template:
+    metadata:
+      labels:
+        app: ms-ne-emision-poliza-tps-pga
+    spec:
+      securityContext:
+        runAsUser: 2000
+      containers:
+        - env:
+            - name: AZURE_KV_ENABLED
+              value: "true"
+            - name: AZURE_KV_URI
+              valueFrom:
+                secretKeyRef:
+                  key: uri
+                  name: kv-ptsg
+            - name: AZURE_KV_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: client-id
+                  name: kv-ptsg
+            - name: AZURE_KV_CLIENT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: client-key
+                  name: kv-ptsg
+            - name: AZURE_KV_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: tenant-id
+                  name: kv-ptsg
+            - name: SPRING_CLOUD_CONFIG_FAIL-FAST
+              value: "true"
+            - name: SPRING_CLOUD_CONFIG_RETRY_MAX-ATTEMPTS
+              value: "30"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://khala-config.config.svc.cluster.local:8888/
+            - name: SPRING_PROFILES_ACTIVE
+              value: $PROFILE
+          image: $REGISTRY/ms-ne-emision-poliza-tps-pga:$TAG
+          name: ms-ne-emision-poliza-tps-pga
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /ms-ne-emision-poliza-tps-pga/emision/v1/health
+              port: 9091
+            initialDelaySeconds: 65
+            periodSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ms-ne-emision-poliza-tps-pga/emision/v1/health
+              port: 9091
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          ports:
+            - containerPort: 9091
+              name: http
+          resources:
+            limits:
+              cpu: 900m
+              memory: 600Mi
+            requests:
+              cpu: 100m
+              memory: 450Mi
+      imagePullSecrets:
+        - name: regsecret
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ms-ne-emision-poliza-tps-pga
+  namespace: ecommerce
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ms-ne-emision-poliza-tps-pga
+  minReplicas: $MIN_REPLICA
+  maxReplicas: $MAX_REPLICA
+  metrics:
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: AverageValue
+          averageValue: 470Mi

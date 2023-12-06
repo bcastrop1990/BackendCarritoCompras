@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Oro solido
+      changes:
+        - createTable:
+            tableName: tbl_dummy
+            columns:
+              - column:
+                  name: id
+                  type: INT(4)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: document_type
+                  type: INT(1)
+              - column:
+                  name: document_number
+                  type: VARCHAR(8)
+              - column:
+                  name: full_name
+                  type: VARCHAR(200)
+        - insert:
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: document_type
+                  value: 1
+              - column:
+                  name: document_number
+                  value: 44444444
+              - column:
+                  name: full_name
+                  value: CHRISTOPHER SANCHEZ CALDERON
+            dbms: 'mssql'
+            tableName: tbl_dummy

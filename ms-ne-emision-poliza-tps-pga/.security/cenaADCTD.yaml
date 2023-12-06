@@ -1,0 +1,158 @@
+# Nombre de la iniciativa. Ejm. CRM
+name: ""
+
+# Squad responsable de la iniciativa. Ejm. Rafaga
+squad: ""
+
+# Correo del analista de seguridad asignado. Ejm. sgalvez@cleveritgroup.com
+analyst: ""
+
+enablers:
+  enabler_1_2: # Validar dispositivos en Intune ()
+    required: false
+  enabler_3_6_38_39_41_81: # Diagrama Lógico y Físico (Hab#3, Hab#6, Hab#38, Hab#39, Hab#41, Hab#81)
+    required: false
+  enabler_4_10: # Validar TLS 1.2 y Cipher Suites (Hab#4, Hab#10)
+    required: false
+  enabler_5: # Validar Security Headers (Hab#5)
+    required: false
+  enabler_7: # Validar VMs - Ports RDP/SSH (Hab#7)
+    required: false
+  enabler_9: # Validar versión AKS (Hab#9)
+    required: false
+  enabler_11_17_18_19_22_23_28: # Diagrama Lógico - Aplica si existe un componente de autenticación en la iniciativa (Hab#11, Hab#17, Hab#18, Hab#19, Hab#22, Hab#23, Hab#28)
+    required: false
+  enabler_20_18_39_44_48_53_55: # Ethical Hacking (Hab#20, Hab#18, Hab#39, Hab#44, Hab#48, Hab#53, Hab#55)
+    required: false
+  enabler_21_26_27_32: # Ethical Hacking - Aplica si la aplicación tiene componente de login estándar o propio (Hab#21, Hab#26, Hab#27, Hab#32)
+    required: false
+  enabler_40: # Ethical Hacking - Aplica para Frontend (Hab#40)
+    required: false
+  enabler_42: # Monitoreo de componentes en Dynatrace (Hab#42)
+    required: false
+  enabler_43: # Modelado de Amenazas en IriusRisk (Hab#43)
+    required: false
+  enabler_45:
+    required: false
+  enabler_47:
+    required: false
+  enabler_49: # Ethical Hacking - Aplica si la iniciativa está relacionada a mobile (Hab#49)
+    required: false
+  enabler_55: # Documentación del proyecto - Diagrama Lógico, Físico, Ethical Hacking e IriusRisk (Hab#55)
+    required: false
+  enabler_58: # Validar Linea Base de Seguridad - LBS APIM, LBS SQL, LBS Storage Account (Hab#58)
+    required: false
+  enabler_64_70: # Seguridad sobre la BD - Cifrado en reposo con AES 256 (Hab #64)
+    required: false
+  enabler_74: # Diagrama Lógico - Aplica si existe integración con terceros y salida de información en la iniciativa (Hab#74)
+    required: false
+
+config:
+  # Configuración para Azure - Puede ser obtenida entrando al recurso en Azure y haciendo clic en "JSON View"
+  azure:
+    aks_clusters:
+      - resource_id: /subscriptions/3a95839d-5c09-4379-8dab-7cc93c1bff88/resourceGroups/rgakspdigitalprod/providers/Microsoft.ContainerService/managedClusters/akscanalprd0100
+      - resource_id: /subscriptions/3a95839d-5c09-4379-8dab-7cc93c1bff88/resourceGroups/rgakspdigitalprod/providers/Microsoft.ContainerService/managedClusters/aksmulticanalprd0100
+
+    correos_pacifico: #Ejm. miguelvargasp@pacifico.com.pe
+      - 
+    
+    apiMgmt:
+      pacificoProd: false
+      pacificoCert: false
+      pacificoDesa: false
+      apis:  
+        - api_name: #Ejm. sankhu
+        - api_name: #Ejm. api-oc-ux-obtiene-archivo-pga-v1
+        - api_name: #Ejm. api-consulta-riesgos-personas
+
+    storage_accounts:
+      - resource_id: 
+
+    sql_databases:
+      - resource_id: 
+
+    virtual_machines:
+      - resource_id: 
+       
+    enterprise_applications:
+      - application_id: 
+
+  # Configuración para Dynatrace
+  dynatrace:
+    dynatrace_services: #Ejm. ms-ne-tarificador-precot-transformaciones
+      - 
+      
+
+  # Configuración para Github
+  github:
+    organizacion_repo:
+      - DG-SeguridaddeAplicaciones/pr-automatizacion-habilitadores
+
+  # Configuración para IriusRisk
+  iriusrisk:
+    squad_iriusrisk: #Ejm. Squad-LosSaicos
+
+  # Configuración para Jira
+  jira:
+    tickets_arquitecturas_logicas:
+      - #Ejm. GDSAD-73
+
+    tickets_arquitecturas_fisicas:
+      - #Ejm. GDSAD-68
+
+    tickets_ethicalhacking:
+      - #Ejm. VUL-321
+      - #Ejm. VUL-34
+
+  # Configuración para Polaris (SAST)
+  sast:
+    project_branch:
+      - 
+
+  # Configuración para SecurityHeaders
+  securityheaders:
+    urls_securityheaders:
+      - #Ejm. https://miespacio.pacifico.com.pe
+
+  # Configuración para SSL Labs
+  ssllabs:
+    urls_ssllabs:
+      - #Ejm. https://miespacio.pacifico.com.pe
+
+    # Configuración interna del proyecto
+  azure_credentials:
+    client_secret: ${CLIENT_SECRET}
+    client_id: ${CLIENT_ID}
+    tenant_id: ${TENANT_ID}
+  github_token:
+    token: ${TOKEN_GITHUB}
+  blackduck:
+    token: ${TOKEN_BLACKDUCK}
+  iriusrisk_token:
+    token: ${TOKEN_IRIUS}
+  dynatrace_token:
+    url: https://hmc05194.live.dynatrace.com
+    token: ${TOKEN_DYNATRACE}
+  sast_token:
+    url: https://pacifico.polaris.synopsys.com
+    token: ${TOKEN_POLARIS}
+  mode: unsafe
+
+# Versión del proyecto
+version: "1.3"
+
+# Token para autenticación
+token:  ${TOKEN}
+
+# Indicador si el proyecto se encuentra en un entorno remoto
+remote: false
+
+# Configuración para la nube (Azure en este caso)
+cloud:
+  azure:
+    # Credenciales de cliente de Azure
+    client_secret: ${CLIENT_SECRET}
+    client_id: ${CLIENT_ID}
+    tenant_id: ${TENANT_ID}
+    subscription_id: 

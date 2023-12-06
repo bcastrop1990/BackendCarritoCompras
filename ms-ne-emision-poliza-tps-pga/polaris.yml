@@ -1,0 +1,46 @@
+version: "1"
+project:
+  name: ${scm.git.repo}
+  branch: ${scm.git.branch}
+  revision:
+    name: ${scm.git.commit}
+    date: ${scm.git.commit.date}
+  groups:
+    Grp_COE_DevSecOps_Users: Observer
+    Grp_ChapterLead_Users: Contributor
+    Grp_Chapter_Seguridad_Users: Administrator
+    GRP_OroSolido_DEV_Users: Contributor
+    GRP_OroSolido_QA_Users: Observer
+capture:
+  build:
+    cleanCommands:
+    - shell: [gradle, -b, build.gradle, --no-daemon, clean]
+    buildCommands:
+    - shell: [gradle, -b, build.gradle, -x, test, --no-daemon, build]
+    coverity:
+      skipFiles:
+      - "@java:src[/\\\\]test[/\\\\]"
+      - "devops[/\\\\]"
+  fileSystem:
+    ears:
+      extensions: [ear]
+      files:
+      - directory: ${project.projectDir}
+    java:
+      files:
+      - directory: ${project.projectDir}
+      - excludeRegex: "src[/\\\\]test[/\\\\]"
+    wars:
+      extensions: [war]
+      files:
+      - directory: ${project.projectDir}
+  coverity:
+    cov-security-da: enable
+analyze:
+  mode: central
+  coverity:
+    cov-analyze: [--all, --webapp-security]
+install:
+  coverity:
+    version: default
+serverUrl: https://pacifico.polaris.synopsys.com

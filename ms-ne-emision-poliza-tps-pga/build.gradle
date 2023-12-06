@@ -1,0 +1,123 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.13'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    id 'org.sonarqube' version '3.3'
+    id 'com.benjaminsproule.swagger' version '1.0.14'
+}
+
+group = 'pe.com.pacifico.kuntur'
+version = '1.0.8-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/PS-Artifactory/kuntur-lib-local")
+        credentials {
+            username = System.getenv("GH_PACKAGES_USER") ?: System.getenv("GH_PACKAGES_USER") ?: System.getenv("GH_PACKAGES_USER") ?: artifactory_user
+            password = System.getenv("GH_PACKAGES_TOKEN") ?: System.getenv("GH_PACKAGES_TOKEN") ?: System.getenv("GH_PACKAGES_TOKEN") ?: artifactory_password
+        }
+    }
+}
+
+ext['spring-security.version'] ='5.8.7'
+ext['jackson.version'] = '2.15.3'
+ext['netty.version'] = '4.1.100.Final'
+ext['tomcat.version'] = '10.1.15'
+ext['snakeyaml.version'] = '2.0'
+ext['woodstox-core'] = '6.5.1'
+ext['commons-text'] = '1.10.0'
+
+
+configurations.configureEach {
+    dependencies {
+        resolutionStrategy.force 'commons-beanutils:commons-beanutils:1.9.4'
+        resolutionStrategy.force 'com.google.guava:guava:32.0.1-jre'
+    }
+}
+
+dependencies {
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'com.pacifico.kuntur:core:0.0.11.10'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:11.2.2.jre11'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxrs', version: '3.5.5'
+    implementation 'io.projectreactor.netty:reactor-netty-core:1.1.5'
+    implementation 'io.projectreactor.netty:reactor-netty-http:1.1.5'
+
+    implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '19.11.0.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.17.1'
+
+
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.mockito:mockito-inline'
+    implementation group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxrs', version: '3.5.5'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java:8.0.26'
+}
+
+checkstyle {
+    toolVersion '10.3.2'
+    configFile file("${project.rootDir}/checkstyle.xml")
+    checkstyleTest.enabled = false
+}
+
+checkstyleMain {
+    source ='src/main/java'
+}
+
+test {
+    useJUnitPlatform()
+    jacoco {
+        destinationFile = file("${buildDir}/jacoco/jacocoTest.exec")
+        classDumpDir = file("${buildDir}/jacoco/classpathdumps")
+    }
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            csv.enabled false
+            html.destination file("${buildDir}/jacocoHtml")
+        }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
+        property "sonar.coverage.exclusions",
+                "**/config/**," +
+				"**/advice/**," +
+				"**/model/**," +
+				"**/webclient/**," +
+				"**/kuntur/*Application*"
+    }
+}
+
+swagger {
+    delete fileTree('devops') {
+        include '**/*.json'
+    }
+    apiSource {
+        springmvc = true
+        locations = ['pe.com.pacifico.kuntur.expose.ExampleController','pe.com.pacifico.kuntur.expose.PolizaController']
+        schemes = ['https']
+        info {
+            title = 'ms-ne-emision-poliza-tps-pga'
+            description = 'guardar y consultar los datos de una poliza'
+            version = '1.0.8'
+        }
+        swaggerDirectory = 'devops'
+        swaggerFileName = 'swagger'
+        attachSwaggerArtifact = true
+    }
+}

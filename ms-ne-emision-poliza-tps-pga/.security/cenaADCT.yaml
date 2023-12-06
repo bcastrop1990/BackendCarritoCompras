@@ -1,0 +1,155 @@
+# Versión de la plantilla CENA
+version: "1.2"
+
+# Nombre de la iniciativa
+name: ""
+
+# Squad responsable de la iniciativa
+squad: ""
+
+# Correo del analista de seguridad asignado
+analyst: ""
+
+enablers:
+  enabler_1_2: # Validar dispositivos en Intune (correos_pacifico)
+    required: false
+  enabler_3_6_38_39_41_81: # Diagrama Lógico y Físico (tickets_arquitecturas_logicas && tickets_arquitecturas_fisicas)
+    required: false
+  enabler_4_10: # Validar TLS 1.2 y Cipher Suites (urls_ssllabs)
+    required: false
+  enabler_5: # Validar SecurityHeaders (urls_securityheaders)
+    required: false
+  enabler_9: # Validar versión AKS (aks_clusters)
+    required: false
+  enabler_11_17_18_19_22_23_28: # Diagrama Lógico: Aplica si existe un componente de autenticación en la iniciativa (tickets_arquitecturas_logicas)
+    required: false
+  enabler_20_18_39_44_48_50_53_55_56_57_80: # Ethical Hacking (tickets_ethicalhacking)
+    required: false
+  enabler_21_26_27_32: # Ethical Hacking: Aplica si la aplicación tiene componente de login estándar o propio (tickets_ethicalhacking)
+    required: false
+  enabler_25: # MFA en operaciones críticas (enterprise_applications)
+    required: false
+  enabler_40: # Ethical Hacking: Aplica para Frontend (tickets_ethicalhacking)
+    required: false
+  enabler_43: # Modelado de Amenazas en IriusRisk (squad_iriusrisk)
+    required: false
+  enabler_45: # SAST (project_branch)
+    required: false
+  enabler_47: # DEJAR COMO FALSE. AUN EN FASE DE PRUEBAS. Gestión de Pull Request (project_branch)
+    required: false
+  enabler_49: # Ethical Hacking: Aplica si la iniciativa está relacionada a mobile (tickets_ethicalhacking)
+    required: false
+  enabler_55: # Documentación del proyecto (tickets_arquitecturas_logicas && tickets_arquitecturas_fisicas && tickets_ethicalhacking && squad_iriusrisk)
+    required: false
+  enabler_58: # Validar Linea Base de Seguridad (apiMgmt && sql_databases && storage_accounts)
+    required: false
+  enabler_74: # Diagrama Lógico: Aplica si existe integración con terceros y salida de información en la iniciativa (tickets_arquitecturas_logicas)
+    required: false
+
+config:
+  # Configuración para Azure - Puede ser obtenida entrando al recurso en Azure y haciendo clic en "JSON View"
+  azure:
+    aks_clusters:
+      - resource_id: 
+      - resource_id: 
+
+    correos_pacifico:
+      - 
+      - 
+    
+    apiMgmt:
+      pacificoProd: true
+      pacificoCert: true
+      pacificoDesa: true
+      apis:  
+        - api_name: 
+        - api_name: 
+
+    storage_accounts:
+      - resource_id:
+      - resource_id: 
+
+    sql_databases:
+      - resource_id:
+      - resource_id: 
+
+    enterprise_applications:
+      - application_id:
+      - application_id: 
+
+  # Configuración para Github
+  github:
+    organizacion_repo:
+      - 
+      -
+
+  # Configuración para IriusRisk
+  iriusrisk:
+    squad_iriusrisk: 
+
+  # Configuración para Jira
+  jira:
+    tickets_arquitecturas_logicas:
+      - 
+      -
+
+    tickets_arquitecturas_fisicas:
+      - 
+      -
+
+    tickets_ethicalhacking:
+      - 
+      -
+
+  # Configuración para Polaris (SAST)
+  sast:
+    project_branch:
+      - 
+      - 
+
+  # Configuración para SecurityHeaders
+  securityheaders:
+    urls_securityheaders:
+      - 
+      - 
+
+  # Configuración para SSL Labs
+  ssllabs:
+    urls_ssllabs:
+      - 
+      - 
+
+  # Configuración interna del proyecto
+  azure_credentials:
+    client_secret: ${CLIENT_SECRET}
+    client_id: ${CLIENT_ID}
+    tenant_id: ${TENANT_ID}
+  bitbucket:
+    token: ${TOKEN_BITBUCKET}
+  github_token:
+    token: ${TOKEN_GITHUB}
+  blackduck:
+    token: ${TOKEN_BLACKDUCK}
+  iriusrisk_token:
+    token: ${TOKEN_IRIUS}
+  dynatrace_token:
+    url: https://hmc05194.live.dynatrace.com
+    token: ${TOKEN_DYNATRACE}
+  sast_token:
+    url: https://pacifico.polaris.synopsys.com
+    token: ${TOKEN_POLARIS}
+  mode: unsafe
+
+# Token para autenticación
+token:  ${TOKEN}
+
+# Indicador si el proyecto se encuentra en un entorno remoto
+remote: false
+
+# Configuración para la nube (Azure en este caso)
+cloud:
+  azure:
+    # Credenciales de cliente de Azure
+    client_secret: ${CLIENT_SECRET}
+    client_id: ${CLIENT_ID}
+    tenant_id: ${TENANT_ID}

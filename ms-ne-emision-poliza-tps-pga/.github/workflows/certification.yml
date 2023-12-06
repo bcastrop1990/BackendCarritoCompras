@@ -1,0 +1,44 @@
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Create tag"
+        type: boolean
+        default: true
+name: Certification
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    outputs:
+      teams: ${{ steps.actorTeams.outputs.teams }}
+    steps:
+      - name: Get Teams from the Actor
+        uses: tspascoal/get-user-teams-membership@v2
+        id: actorTeams
+        with:
+          username: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_READ_ORG }}
+
+  certification:
+    uses: "pacifico-seguros-org/gradle-deploy-aks/.github/workflows/main.yml@latest"
+    if: github.ref == 'refs/heads/master' &&  (contains(needs.validation.outputs.teams, '_QA_Users') || contains(needs.validation.outputs.teams, 'Grp_Chapter_DevOps_Users') || contains(needs.validation.outputs.teams, 'Grp_CoE_DevSecOps_Users'))
+    needs: validation
+    with:
+      java_version: "11"
+      gradle_version: "6.9.4"
+      registry_name: ${{ vars.AZURE_CR_NAME_CRT  }}
+      azure_tenant_id: ${{ vars.AZURE_TENANT_ID  }}
+      azure_subscription_id: ${{ vars.AZURE_PDIGITAL_SUBSCRIPTION_ID_CRT  }}
+      resource_group: ${{ vars.AZURE_AKS_RG_NAME_CRT  }}
+      cluster_name: ${{ vars.AZURE_AKS_NAME_CRT  }}
+      profile: "certification"
+      cluster_namespace: ${{ vars.AZURE_AKS_NAMESPACE }}
+      cluster_max_replica: "2"
+      cluster_min_replica: "1"
+      environment_stage: "qa"
+      tag: ${{ inputs.tag  }}
+    secrets:
+      GH_PACKAGES_USER: ${{ secrets.GH_PACKAGES_USER }}
+      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_SP_CRT }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET_SP_CRT }}
