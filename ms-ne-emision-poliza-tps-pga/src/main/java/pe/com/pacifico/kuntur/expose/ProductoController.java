@@ -45,9 +45,9 @@ public class ProductoController {
    *
    * @return one example.
    */
-  @GetMapping("/id")
-  public Producto getProductoPorId(@RequestBody ProductoIdRequest request) {
-    return productoService.getProductoPorId(request.getIdProducto());
+  @GetMapping("/id/{id}")
+  public Producto getProductoPorId(@PathVariable String id) {
+    return productoService.getProductoPorId(Long.parseLong(id));
   }
 
   /**
@@ -55,10 +55,10 @@ public class ProductoController {
    *
    * @return one example.
    */
-  @GetMapping("/categoria")
-  public ResponseEntity<List<ProductoResponse>> getProductosPorCategoria(@RequestBody ProductoCategoriaRequest request) {
+  @GetMapping("/categoria/{categoria}")
+  public ResponseEntity<List<ProductoResponse>> getProductosPorCategoria(@PathVariable String categoria) {
 
-    return ResponseEntity.ok(productoService.getProductosPorCategoria(request.getCategoria()).stream()
+    return ResponseEntity.ok(productoService.getProductosPorCategoria(categoria).stream()
         .map(this::buildResponse).collect(Collectors.toList()));
 
   }
