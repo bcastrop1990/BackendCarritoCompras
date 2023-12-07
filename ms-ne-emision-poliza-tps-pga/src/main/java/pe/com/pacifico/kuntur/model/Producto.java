@@ -44,11 +44,10 @@ public class Producto {
   private String nombreProducto;
 
   @Column(name = "descripcion")
-  private String descripcion;
+  private String descripcionProducto;
 
   @Column(name = "categoria")
   private String categoria;
-
 
   @Column(name = "precio")
   private Long precio;
@@ -57,5 +56,5 @@ public class Producto {
   private String urlImagen;
 
   @Column(name = "detallelarga")
-  private String descripcionlarga;
+  private String descripcionLarga;
 }

@@ -65,8 +65,8 @@ public class ProductoServiceImpl implements ProductoService {
 
     if (productoExistente != null) {
       productoExistente.setNombreProducto(productoActualizado.getNombreProducto());
-      productoExistente.setDescripcion(productoActualizado.getDescripcion());
-      productoExistente.setDescripcionlarga(productoActualizado.getDescripcionlarga());
+      productoExistente.setDescripcionProducto(productoActualizado.getDescripcionProducto());
+      productoExistente.setDescripcionLarga(productoActualizado.getDescripcionLarga());
       productoExistente.setPrecio(productoActualizado.getPrecio());
       productoExistente.setUrlImagen(productoActualizado.getUrlImagen());
       return productoJpaRepository.save(productoExistente);

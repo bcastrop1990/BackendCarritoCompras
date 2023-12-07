@@ -12,8 +12,6 @@ import pe.com.pacifico.kuntur.expose.request.ProductoIdRequest;
 import pe.com.pacifico.kuntur.expose.request.response.ProductoResponse;
 import pe.com.pacifico.kuntur.model.Producto;
 
-import javax.validation.Valid;
-
 /**
  * This method is used to get only one exampleToBeObfuscated.
  * @author Bruno Castro
@@ -62,6 +60,7 @@ public class ProductoController {
 
   }
 
+
   private ProductoResponse buildResponse(Producto p) {
     ProductoResponse pr = new ProductoResponse();
     pr.setIdProducto(String.valueOf(p.getIdProducto()));
@@ -69,8 +68,8 @@ public class ProductoController {
     pr.setNombreProducto(p.getNombreProducto());
     pr.setCategoria(p.getCategoria());
     pr.setUrlImagen(p.getUrlImagen());
-    pr.setDescripcionProducto(p.getDescripcion());
-    pr.setDescripcionLarga(p.getDescripcionlarga());
+    pr.setDescripcionProducto(p.getDescripcionProducto());
+    pr.setDescripcionLarga(p.getDescripcionLarga());
     return pr;
   }
 
