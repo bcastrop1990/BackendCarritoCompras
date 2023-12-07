@@ -4,10 +4,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pe.com.pacifico.kuntur.business.UsuarioService;
 import pe.com.pacifico.kuntur.business.VentaService;
 import pe.com.pacifico.kuntur.expose.request.VentaRequest;
@@ -22,6 +19,7 @@ import pe.com.pacifico.kuntur.expose.request.response.VentaResponse;
 @RequestMapping("/venta")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class VentaController {
 
   private final VentaService ventaService;

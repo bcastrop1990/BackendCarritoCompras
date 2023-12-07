@@ -1,5 +1,5 @@
 server:
-  port: 9092
+  port: 9091
   servlet:
     context-path: /ms-ne-emision-poliza-tps-pga/emision/v1
 
@@ -10,17 +10,15 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driverClassName: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521/EE.oracle.docker
-    username: system
-    password: oracle
-
-
+    url: jdbc:oracle:thin:@bdcsti.co4j4s1fe5tg.us-east-2.rds.amazonaws.com:1521/BDCAR
+    username: admin
+    password: Plani11as!
   jpa:
     show-sql: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
-        default_schema: EMISIONTPS0100
+        dialect: org.hibernate.dialect.Oracle12cDialect
+        default_schema: ADMIN
         format_sql: true
   liquibase:
     enabled: true
@@ -29,7 +27,7 @@ spring:
 kuntur:
   spring:
     jdbc:
-      show-sql: false
+      show-sql: true
 
 api:
   support:
@@ -46,7 +44,7 @@ webclient:
   write:
     time-out.seconds: 50
   circuit-breaker:
-      time-out.seconds: 10
+    time-out.seconds: 10
 
 info:
   project:
