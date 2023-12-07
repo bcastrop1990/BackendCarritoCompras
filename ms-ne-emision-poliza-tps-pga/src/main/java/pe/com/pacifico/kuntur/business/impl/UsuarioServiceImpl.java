@@ -36,12 +36,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     if (usuarioOptional.isPresent()) {
       Usuario usuario = usuarioOptional.get();
       if(usuario.getPassword().equals(request.getContrasena())){
-        return ResponseEntity.ok(Constantes.MENSAJE_EXITO_LOGIN_EXITOSO );
+        //return ResponseEntity.ok(Constantes.MENSAJE_EXITO_LOGIN_EXITOSO );
+        return ResponseEntity.ok("1");
       }else{
-        return ResponseEntity.ok(MENSAJE_ERROR_LOGIN_FALLO);
+        //return ResponseEntity.ok(MENSAJE_ERROR_LOGIN_FALLO);
+        return ResponseEntity.ok("0");
       }
      } else {
-      return ResponseEntity.ok(MENSAJE_ERROR_LOGIN_USUARIO_NO_EXISTE);
+      //return ResponseEntity.ok(MENSAJE_ERROR_LOGIN_USUARIO_NO_EXISTE);
+      return ResponseEntity.ok("0");
     }
   }
 
@@ -60,7 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
       usuario.setIdUsuario(usuarioJpaRepository.obtenerMaxIdUsuario());
       Usuario usuarioGuardado = usuarioJpaRepository.save(usuario);
       if (usuarioGuardado != null) {
-        return ResponseEntity.ok(Constantes.MENSAJE_EXITO_USUARIO_GUARDADO+ usuarioGuardado.getIdUsuario());
+        return ResponseEntity.ok(usuarioGuardado.getIdUsuario());
       } else {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body( Constantes.MENSAJE_ERROR_GUARDAR_USUARIO);
       }

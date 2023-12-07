@@ -60,6 +60,6 @@ public class VentaResponse implements Serializable {
   @NotBlank(message = "Input must not be empty")
   @ApiModelProperty(example = "19.90")
   @Pattern(regexp = "[0-9,]+[^.]", message = "Input should be only numbers")
-  private double montoTotal;
+  private Long montoTotal;
 
 }

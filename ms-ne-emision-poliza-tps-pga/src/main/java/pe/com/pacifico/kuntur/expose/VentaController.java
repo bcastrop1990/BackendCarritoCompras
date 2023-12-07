@@ -32,7 +32,7 @@ public class VentaController {
 
     VentaResponse response = ventaService.registrarVenta(request);
 
-    return ResponseEntity.ok("Venta registrada. IdVenta: " + response.getIdVenta());
+    return ResponseEntity.ok(String.valueOf(response.getIdVenta()));
 
   }
 

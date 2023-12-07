@@ -39,7 +39,7 @@ public class VentaRequest implements Serializable {
   @NotNull
   @NotBlank(message = "Input must not be empty")
   @ApiModelProperty(example = "bcastro")
-  private double montoTotal;
+  private Long montoTotal;
 
 
 }

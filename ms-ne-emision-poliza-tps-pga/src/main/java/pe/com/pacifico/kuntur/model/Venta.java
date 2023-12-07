@@ -37,7 +37,7 @@ public class Venta implements Serializable {
   private LocalDateTime fecVenta;
 
   @Column(name = "montototal")
-  private double montoTotal;
+  private Long montoTotal;
 
 
 }

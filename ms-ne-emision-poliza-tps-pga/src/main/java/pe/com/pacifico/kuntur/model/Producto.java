@@ -51,7 +51,7 @@ public class Producto {
 
 
   @Column(name = "precio")
-  private double precio;
+  private Long precio;
 
   @Column(name = "urlimagen")
   private String urlImagen;
