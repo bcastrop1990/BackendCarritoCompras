@@ -12,6 +12,8 @@ import pe.com.pacifico.kuntur.expose.request.ProductoIdRequest;
 import pe.com.pacifico.kuntur.expose.request.response.ProductoResponse;
 import pe.com.pacifico.kuntur.model.Producto;
 
+import javax.validation.Valid;
+
 /**
  * This method is used to get only one exampleToBeObfuscated.
  * @author Bruno Castro
@@ -59,7 +61,6 @@ public class ProductoController {
         .map(this::buildResponse).collect(Collectors.toList()));
 
   }
-
 
   private ProductoResponse buildResponse(Producto p) {
     ProductoResponse pr = new ProductoResponse();

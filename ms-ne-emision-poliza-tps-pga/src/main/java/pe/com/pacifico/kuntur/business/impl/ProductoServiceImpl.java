@@ -48,7 +48,10 @@ public class ProductoServiceImpl implements ProductoService {
 
   @Override
   public List<Producto> getProductosPorCategoria(String category) {
-
+    System.out.print("ESTE ES EL PRODUCTO"+category);
+    if(category.trim().isEmpty()){
+      return productoJpaRepository.findAll();
+    }
     return productoJpaRepository.findByCategory(category);
   }
 
