@@ -48,7 +48,7 @@ public class ProductoServiceImpl implements ProductoService {
 
   @Override
   public List<Producto> getProductosPorCategoria(String category) {
-    if(category == "todo"){
+    if ("Todo".equals(category)) {
       return productoJpaRepository.findAll();
     }
     return productoJpaRepository.findByCategory(category);
