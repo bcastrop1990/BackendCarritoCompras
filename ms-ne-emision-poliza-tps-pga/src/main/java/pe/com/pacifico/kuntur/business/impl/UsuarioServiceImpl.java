@@ -1,7 +1,5 @@
 package pe.com.pacifico.kuntur.business.impl;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +10,11 @@ import pe.com.pacifico.kuntur.business.UsuarioService;
 import pe.com.pacifico.kuntur.business.util.Constantes;
 import pe.com.pacifico.kuntur.expose.request.UsuarioLoginRequest;
 import pe.com.pacifico.kuntur.expose.request.UsuarioSaveRequest;
+import pe.com.pacifico.kuntur.expose.request.response.UsuarioLoginResponse;
 import pe.com.pacifico.kuntur.expose.request.response.UsuarioResponse;
 import pe.com.pacifico.kuntur.model.Usuario;
 import pe.com.pacifico.kuntur.repository.UsuarioJpaRepository;
 
-import static pe.com.pacifico.kuntur.business.util.Constantes.MENSAJE_ERROR_LOGIN_FALLO;
-import static pe.com.pacifico.kuntur.business.util.Constantes.MENSAJE_ERROR_LOGIN_USUARIO_NO_EXISTE;
 @Service
 @Slf4j
 public class UsuarioServiceImpl implements UsuarioService {
@@ -30,31 +27,39 @@ public class UsuarioServiceImpl implements UsuarioService {
   }
 
   @Override
-  public ResponseEntity login (UsuarioLoginRequest request) {
-
+  public UsuarioLoginResponse login (UsuarioLoginRequest request) {
+    UsuarioLoginResponse response = new UsuarioLoginResponse();
     Optional<Usuario> usuarioOptional = usuarioJpaRepository.buscarPorNombreUsuario(request.getUsername());
     if (usuarioOptional.isPresent()) {
       Usuario usuario = usuarioOptional.get();
       if(usuario.getPassword().equals(request.getContrasena())){
         //return ResponseEntity.ok(Constantes.MENSAJE_EXITO_LOGIN_EXITOSO );
-        return ResponseEntity.ok("1");
+        response.setMensaje(Constantes.MENSAJE_EXITO_LOGIN_EXITOSO);
+        response.setIdUsuario(1);
+        return response;
       }else{
         //return ResponseEntity.ok(MENSAJE_ERROR_LOGIN_FALLO);
-        return ResponseEntity.ok("0");
+        response.setMensaje(Constantes.MENSAJE_ERROR_LOGIN_FALLO);
+        response.setIdUsuario(0);
+        return response;
       }
      } else {
       //return ResponseEntity.ok(MENSAJE_ERROR_LOGIN_USUARIO_NO_EXISTE);
-      return ResponseEntity.ok("0");
+      response.setMensaje(Constantes.MENSAJE_ERROR_LOGIN_USUARIO_NO_EXISTE);
+      response.setIdUsuario(0);
+      return response;
     }
   }
 
 
   @Override
-  public ResponseEntity guardarUsuario(UsuarioSaveRequest request) {
-
+  public UsuarioLoginResponse guardarUsuario(UsuarioSaveRequest request) {
+    UsuarioLoginResponse response = new UsuarioLoginResponse();
     Optional<Usuario> usuarioOptional = usuarioJpaRepository.buscarPorNombreUsuario(request.getUsername());
     if (usuarioOptional.isPresent()) {
-       return ResponseEntity.ok(Constantes.MENSAJE_ERROR_USUARIO_EXISTE);
+      response.setIdUsuario(0);
+      response.setMensaje(Constantes.MENSAJE_ERROR_USUARIO_EXISTE);
+      return response;
     }else {
       Usuario usuario = new Usuario();
       usuario.setUsername(request.getUsername());
@@ -63,10 +68,14 @@ public class UsuarioServiceImpl implements UsuarioService {
       usuario.setIdUsuario(usuarioJpaRepository.obtenerMaxIdUsuario());
       Usuario usuarioGuardado = usuarioJpaRepository.save(usuario);
       if (usuarioGuardado != null) {
-        return ResponseEntity.ok(usuarioGuardado.getIdUsuario());
+        response.setIdUsuario(usuarioGuardado.getIdUsuario());
+        response.setMensaje(Constantes.MENSAJE_EXITO_USUARIO_GUARDADO);
+        return response;
       } else {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body( Constantes.MENSAJE_ERROR_GUARDAR_USUARIO);
-      }
+        response.setIdUsuario(0);
+        response.setMensaje(Constantes.MENSAJE_ERROR_GUARDAR_USUARIO);
+        return response;
+       }
     }
 
   }

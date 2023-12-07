@@ -29,11 +29,19 @@ public class VentaServiceImpl implements VentaService {
     venta.setIdVenta(ventaJpaRepository.obtenerMaxIdTarea());
 
     Venta ventaGuardada = ventaJpaRepository.save(venta);
-    VentaResponse response = new VentaResponse();
-    response.setIdVenta(ventaGuardada.getIdVenta());
-    response.setIdUsuario(ventaGuardada.getIdUsuario());
-    response.setMontoTotal(ventaGuardada.getMontoTotal());
-    return response;
+    if(ventaGuardada != null){
+      VentaResponse response = new VentaResponse();
+      response.setIdVenta(ventaGuardada.getIdVenta());
+      response.setIdUsuario(ventaGuardada.getIdUsuario());
+      response.setMontoTotal(ventaGuardada.getMontoTotal());
+      response.setMensaje("Se realizo la venta exitosamente.");
+      return response;
+    }else{
+      VentaResponse response = new VentaResponse();
+      response.setMensaje("Fallo la venta.");
+      return response;
+    }
+
   }
 
 

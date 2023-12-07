@@ -38,7 +38,7 @@ import com.pacifico.kuntur.core.data.input.validation.RegularExpression;
 @NoArgsConstructor
 @Setter
 @ToString
-public class UsuarioResponse implements Serializable {
+public class UsuarioLoginResponse implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -48,21 +48,10 @@ public class UsuarioResponse implements Serializable {
   @Pattern(regexp = RegularExpression.ONLY_NUMBERS, message = "Input should be only numbers")
   private int idUsuario;
 
-  @Size(min = 8)
   @NotNull
   @NotBlank(message = "Input must not be empty")
-  @ApiModelProperty(example = "12345678")
-  private String contrasena;
-
-  @Size(max = 16)
-  @NotNull
-  @NotBlank(message = "Input must not be empty")
-  @ApiModelProperty(example = "bcastro")
-  private String username;
-
-  @Size(max = 30)
-  @ApiModelProperty(example = "example@gmail.com")
-  @Pattern(regexp = Constantes.REGEXP_EMAIL, message = "Correo electrónico usuario")
-  private String email;
+  @ApiModelProperty(example = "01")
+  @Pattern(regexp = RegularExpression.ONLY_NUMBERS, message = "Input should be only numbers")
+  private String mensaje;
 
 }

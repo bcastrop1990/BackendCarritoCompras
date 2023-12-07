@@ -28,11 +28,9 @@ public class VentaController {
   private final UsuarioService usuarioService;
 
   @PostMapping("/registrar")
-  public ResponseEntity<String> registerSale(@RequestBody VentaRequest request) {
+  public ResponseEntity<VentaResponse> registerSale(@RequestBody VentaRequest request) {
 
-    VentaResponse response = ventaService.registrarVenta(request);
-
-    return ResponseEntity.ok(String.valueOf(response.getIdVenta()));
+    return ResponseEntity.ok(ventaService.registrarVenta(request));
 
   }
 

@@ -50,7 +50,7 @@ public class Constantes {
   public static final String MENSAJE_EXITO_UPDATE_DELETE_TAREA = "LA TAREA SE CAMBIO DE ESTADO.";
   public static final String MENSAJE_FALLO_UPDATE_DELETE_TAREA = "OCURRIO UN ERROR NO SE CAMBIO DE ESTADO.";
   public static final String MENSAJE_ERROR_USUARIO_EXISTE = "EL USUARIO YA EXITE.";
-  public static final String MENSAJE_EXITO_USUARIO_GUARDADO = "USUARIO GUARDADO CORRECTAMENTE. ID: ";
+  public static final String MENSAJE_EXITO_USUARIO_GUARDADO = "USUARIO GUARDADO CORRECTAMENTE";
   public static final String MENSAJE_ERROR_GUARDAR_USUARIO = "Error al guardar el usuario.";
 
   public static final String MENSAJE_EXITO_LOGIN_EXITOSO = "Inicio de sesion exitoso";

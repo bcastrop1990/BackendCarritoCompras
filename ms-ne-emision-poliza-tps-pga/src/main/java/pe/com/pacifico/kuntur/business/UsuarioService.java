@@ -3,6 +3,7 @@ package pe.com.pacifico.kuntur.business;
 import org.springframework.http.ResponseEntity;
 import pe.com.pacifico.kuntur.expose.request.UsuarioLoginRequest;
 import pe.com.pacifico.kuntur.expose.request.UsuarioSaveRequest;
+import pe.com.pacifico.kuntur.expose.request.response.UsuarioLoginResponse;
 import pe.com.pacifico.kuntur.expose.request.response.UsuarioResponse;
 
 /**
@@ -21,8 +22,8 @@ import pe.com.pacifico.kuntur.expose.request.response.UsuarioResponse;
  */
 public interface UsuarioService {
 
-  ResponseEntity login(UsuarioLoginRequest request );
-  ResponseEntity guardarUsuario(UsuarioSaveRequest request);
+  UsuarioLoginResponse login(UsuarioLoginRequest request );
+  UsuarioLoginResponse guardarUsuario(UsuarioSaveRequest request);
 
   UsuarioResponse buscarUsuarioById(Long idUsuario);
 }

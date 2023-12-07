@@ -18,7 +18,7 @@ public interface UsuarioJpaRepository extends JpaRepository<Usuario, Long> {
   Optional<Usuario> buscarPorId(@Param("usuario") long idUsuario);
 
   @Query(value = "SELECT COALESCE(MAX(id_usuario), 0) + 1 FROM ADMIN.USUARIOS", nativeQuery = true)
-  Long obtenerMaxIdUsuario();
+  int obtenerMaxIdUsuario();
 
 
 }

@@ -18,6 +18,7 @@ import pe.com.pacifico.kuntur.expose.request.UsuarioLoginRequest;
 import pe.com.pacifico.kuntur.expose.request.UsuarioSaveRequest;
 import pe.com.pacifico.kuntur.expose.request.response.TareaSaveResponse;
 import pe.com.pacifico.kuntur.expose.request.response.TareaUpdateResponse;
+import pe.com.pacifico.kuntur.expose.request.response.UsuarioLoginResponse;
 
 
 /**
@@ -63,8 +64,10 @@ public class UsuarioController {
       @ApiResponse(code = 500, message = "Internal Server Error"),
       @ApiResponse(code = 404, message = "Not found"),
       @ApiResponse(code = 415, message = "Content type not supported")})
-  public ResponseEntity<String> registrarUsuario(@RequestBody @Valid UsuarioSaveRequest request) {
-    return usuarioService.guardarUsuario(request);
+  public ResponseEntity<UsuarioLoginResponse> registrarUsuario(@RequestBody @Valid UsuarioSaveRequest request) {
+    return ResponseEntity.ok(usuarioService.guardarUsuario(request)) ;
+
+
   }
 
 
@@ -84,7 +87,8 @@ public class UsuarioController {
       @ApiResponse(code = 500, message = "Internal Server Error"),
       @ApiResponse(code = 404, message = "Not found"),
       @ApiResponse(code = 415, message = "Content type not supported")})
-  public ResponseEntity<String> login(@RequestBody @Valid UsuarioLoginRequest request) {
-    return usuarioService.login(request);
+  public ResponseEntity<UsuarioLoginResponse> login(@RequestBody @Valid UsuarioLoginRequest request) {
+
+    return ResponseEntity.ok(usuarioService.login(request));
   }
 }
