@@ -49,6 +49,9 @@ public class Tarea implements Serializable {
   @Column(name = "descripcion")
   private String descripcion;
 
+  @Column(name = "detallelarga")
+  private String descripcionLarga;
+
   @Column(name = "estado")
   private String estado;
 }

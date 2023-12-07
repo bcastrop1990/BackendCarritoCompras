@@ -55,4 +55,7 @@ public class Producto {
 
   @Column(name = "urlimagen")
   private String urlImagen;
+
+  @Column(name = "detallelarga")
+  private String descripcionlarga;
 }

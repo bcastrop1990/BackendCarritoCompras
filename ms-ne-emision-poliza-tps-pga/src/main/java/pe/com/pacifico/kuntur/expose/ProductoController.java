@@ -70,6 +70,7 @@ public class ProductoController {
     pr.setCategoria(p.getCategoria());
     pr.setUrlImagen(p.getUrlImagen());
     pr.setDescripcionProducto(p.getDescripcion());
+    pr.setDescripcionLarga(p.getDescripcionlarga());
     return pr;
   }
 

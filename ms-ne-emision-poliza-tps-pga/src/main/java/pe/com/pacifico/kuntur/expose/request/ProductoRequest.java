@@ -76,4 +76,10 @@ public class ProductoRequest implements Serializable {
   @NotBlank(message = "Input must not be empty")
   @Pattern(regexp = "[0-9,]+[^.]", message = "Input should be only numbers")
   private Long precio;
+
+  @Size(max = 500)
+  @NotNull
+  @NotBlank(message = "Input must not be empty")
+  @ApiModelProperty(example = "Lampara antigua color marron")
+  private String descripcionLarga;
 }

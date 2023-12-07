@@ -78,4 +78,10 @@ public class ProductoResponse implements Serializable {
   @Pattern(regexp = "[0-9,]+[^.]", message = "Input should be only numbers")
   private Long precio;
 
+  @Size(max = 50)
+  @NotNull
+  @NotBlank(message = "Input must not be empty")
+  @ApiModelProperty(example = "El proyector de alta definición para cine en casa ....")
+  private String descripcionLarga;
+
 }
