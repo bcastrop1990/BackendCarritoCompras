@@ -1,5 +1,6 @@
 package pe.com.pacifico.kuntur.business.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,15 @@ public class ProductoServiceImpl implements ProductoService {
     if ("Todo".equals(category)) {
       return productoJpaRepository.findAll();
     }
-    return productoJpaRepository.findByCategory(category);
+    List<Producto> productosTotales = new ArrayList<>();
+    String[] categoryList = category.split(",");
+
+    for (String categoryActual : categoryList) {
+      List<Producto> productosPorCategory = productoJpaRepository.findByCategory(categoryActual.trim());
+      productosTotales.addAll(productosPorCategory);
+    }
+
+    return productosTotales;
   }
 
   @Override
